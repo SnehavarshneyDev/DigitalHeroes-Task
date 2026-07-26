@@ -23,18 +23,23 @@ app.post("/analyze", async (req, res) => {
     const response = await axios.get(url, {
       timeout: 10000,
       validateStatus: () => true,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36",
+        Accept: "text/html",
+      },
     });
+
     console.log(response.headers["content-type"]);
 
     const end = Date.now();
 
-    if (
-      !response.headers["content-type"]?.includes("text/html")
-    ) {
+    if (!response.headers["content-type"]?.includes("text/html")) {
       return res.status(400).json({
-  error:
-    "This website blocks automated requests or does not return standard HTML.",
-});
+        error:
+          "This website blocks automated requests or does not return standard HTML.",
+      });
+    }
 
     const $ = cheerio.load(response.data);
 
@@ -59,7 +64,8 @@ app.post("/analyze", async (req, res) => {
       .text()
       .replace(/\s+/g, " ")
       .trim()
-      .split(" ").filter(Boolean).length;
+      .split(" ")
+      .filter(Boolean).length;
 
     res.json({
       httpStatus: response.status,
@@ -70,6 +76,7 @@ app.post("/analyze", async (req, res) => {
       imagesMissingAlt,
       wordCount,
     });
+
   } catch (err) {
     res.status(500).json({
       error: err.message,
@@ -77,6 +84,8 @@ app.post("/analyze", async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log(" Server running on http://localhost:5000");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
