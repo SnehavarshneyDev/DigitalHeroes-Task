@@ -98,8 +98,12 @@ document.querySelector("#app").insertAdjacentHTML(
   `
 <footer class="footer">
     Built for
-    <a href="https://digitalheroesco.com" target="_blank">
-        Digital Heroes Training Task
+    <a
+      href="https://digitalheroesco.com"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Digital Heroes Training Task
     </a>
 </footer>
 `

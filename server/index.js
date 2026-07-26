@@ -30,8 +30,6 @@ app.post("/analyze", async (req, res) => {
       },
     });
 
-    console.log(response.headers["content-type"]);
-
     const end = Date.now();
 
     if (!response.headers["content-type"]?.includes("text/html")) {
@@ -84,8 +82,13 @@ app.post("/analyze", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
+export default app;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Server sirf tab start hoga jab file direct run hogi
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 5000;
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
