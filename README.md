@@ -189,7 +189,7 @@ If I had one more day, I would add:
 
 ## Author
 
-Sneha Varshney
+Isneha Varshney
 
 GitHub:
 https://github.com/SnehavarshneyDev
